@@ -11,7 +11,7 @@ namespace ConsoleApp1
 
         static void PopularMatriz(string[,] matriz, string nome)
         {
-            int num = 1;
+            int preenchimentoNumerico = 1;
 
             int quantidadeLinhas = matriz.GetLength(0);
             int quantidadeColunas = matriz.GetLength(1);
@@ -25,23 +25,24 @@ namespace ConsoleApp1
 
                     if (linhaDoMeio)
                     {
-                        matriz[indiceLinha, 0] = (num * 2).ToString();
+                        matriz[indiceLinha, 0] = (preenchimentoNumerico * 2).ToString();
 
                         int indiceUltimaColuna = quantidadeColunas - 1;
-                        matriz[indiceLinha, indiceUltimaColuna] = (num / 2 + 1).ToString();
+
+                        matriz[indiceLinha, indiceUltimaColuna] = (preenchimentoNumerico / 2 + 1).ToString();
 
                         if (indiceColuna == indiceUltimaColuna)
                         {
-                            num = (num * 2) - 1;
+                            preenchimentoNumerico = (preenchimentoNumerico * 2) - 1;
                         }
                     }
                     else if (ultimaLinha)
                     {
-                        matriz[indiceLinha, indiceColuna] = (num--).ToString();
+                        matriz[indiceLinha, indiceColuna] = (preenchimentoNumerico--).ToString();
                     }
                     else
                     {
-                        matriz[indiceLinha, indiceColuna] = (num++).ToString();
+                        matriz[indiceLinha, indiceColuna] = (preenchimentoNumerico++).ToString();
                     }
                 }
             }
