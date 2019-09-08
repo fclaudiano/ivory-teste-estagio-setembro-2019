@@ -4,71 +4,64 @@ namespace ConsoleApp1
 {
     class Program
     {
-        static void criaMatriz (string nome)
+        static string[,] CriarMatriz(int linhas, int colunas)
         {
-            int i = nome.Length;
-            string [,] matriz = new string[3, i+2];
-            populaMatriz(matriz, i+2, nome);
+            return new string[linhas, colunas];
         }
 
-        static void populaMatriz(string[,] matriz, int controle, string nome)
+        static void PopularMatriz(string[,] matriz, string nome)
         {
             int num = 1;
 
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < controle; j++)
-                {
+            int quantidadeLinhas = matriz.GetLength(0);
+            int quantidadeColunas = matriz.GetLength(1);
 
-                    if (i==1)
+            for (int indiceLinha = 0; indiceLinha < quantidadeLinhas; indiceLinha++)
+            {
+                for (int indiceColuna = 0; indiceColuna < quantidadeColunas; indiceColuna++)
+                {
+                    bool linhaDoMeio = indiceLinha == 1;
+                    bool ultimaLinha = indiceLinha == 2;
+
+                    if (linhaDoMeio)
                     {
-                        if (j==0)
+                        matriz[indiceLinha, 0] = (num * 2).ToString();
+
+                        int indiceUltimaColuna = quantidadeColunas - 1;
+                        matriz[indiceLinha, indiceUltimaColuna] = (num / 2 + 1).ToString();
+
+                        if (indiceColuna == indiceUltimaColuna)
                         {
-                            matriz[i, j] = ((controle+1) * 2).ToString();
+                            num = (num * 2) - 1;
                         }
-                        if (j == controle-1)
-                        {
-                            matriz[i, j] = (controle+1).ToString();
-                            num = (num *2) - 1;
-                        }
+                    }
+                    else if (ultimaLinha)
+                    {
+                        matriz[indiceLinha, indiceColuna] = (num--).ToString();
                     }
                     else
                     {
-                        if (i == 2)
-                        {
-                            matriz[i, j] = (num--).ToString();
-                        }
-                        else
-                        {
-                            matriz[i, j] = (num++).ToString();
-                        }
-                        
+                        matriz[indiceLinha, indiceColuna] = (num++).ToString();
                     }
-                    
                 }
             }
 
-           for (int i = 0 ,j = 1; j < controle-1; j++)
-           {
-                matriz[1, j] = (nome[i]).ToString(); ;
-                i++;
-           }
-            
-
-            exibirMatriz(matriz,controle);
-            Console.ReadKey();
+            for (int indice = 0, colunas = 1; colunas <= nome.Length; colunas++)
+            {
+                matriz[1, colunas] = (nome[indice]).ToString();
+                indice++;
+            }
         }
 
-      
 
-        static void exibirMatriz (string [,] matriz, int controle)
+        static void ExibirMatriz(string[,] matriz, int quantidadeColunas)
         {
-            for (int i = 0; i < 3; i++)
+            for (int indiceLinha = 0; indiceLinha < 3; indiceLinha++)
             {
-                for (int j = 0; j < controle; j++)
+                for (int indiceColuna = 0; indiceColuna < quantidadeColunas; indiceColuna++)
                 {
-   
-                  Console.Write( matriz[i, j]+"\t");
+
+                    Console.Write(matriz[indiceLinha, indiceColuna] + "\t");
 
                 }
                 Console.WriteLine();
@@ -82,8 +75,17 @@ namespace ConsoleApp1
 
             Console.Clear();
 
-            criaMatriz(nome);
-            
+            int quantidadeLetrasNome = nome.Length;
+            int colunas = quantidadeLetrasNome + 2;
+            const int linhas = 3;
+
+            string[,] matriz = CriarMatriz(linhas, colunas);
+
+            PopularMatriz(matriz, nome);
+
+            ExibirMatriz(matriz, colunas);
+
+            Console.ReadKey();
         }
     }
 }
